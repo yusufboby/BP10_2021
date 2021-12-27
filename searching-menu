@@ -1,0 +1,156 @@
+package bp1_2021;
+import java.util.Scanner;
+public class BP10_2021 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] makanan = new String[10];
+	int[] harga = new int[10];
+		
+	//Inisialisasi Array
+	makanan[0] = "Sate Ayam"; harga[0] = 12000;
+	makanan[1] = "Sate Sapi"; harga[1] = 15000;
+	makanan[2] = "Sate Kambing"; harga[2] = 20000;
+	makanan[3] = "Soto Madura"; harga[3] = 12000;
+	makanan[4] = "Soto Lamongan"; harga[4] = 14000;
+	makanan[5] = "Gado-Gado"; harga[5] = 10000;
+	makanan[6] = "Rawon"; harga[6] = 13000;
+	makanan[7] = "Bakso"; harga[7] = 8000;
+	makanan[8] = "Pecel"; harga[8] = 7000;
+	makanan[9] = "Penyetan"; harga[9] = 9000;
+	String[] beliMakan = new String[5];
+	int[] beliHarga = new int[5];
+	int pilih = 0, jumlahBeli = 0;
+                int count=0,count2=0;
+                String rangemakanan[]=new String[10];
+                int rangeharga[]=new int[10];
+        
+        do {
+            System.out.println("\nMENU");
+            System.out.println("1. Daftar Makanan");
+            System.out.println("2. Cari Makanan");
+            System.out.println("3. Cari Berdasarkan Range Harga");
+            System.out.println("4. Selesai");
+            System.out.print("Pilih = ");
+            pilih = sc.nextInt();
+            
+            switch (pilih) {
+                case 1:
+                    //Urutkan berdasar nama
+                    //Pakai bubble sort
+                    for (int i = 0; i < 10; i++) {
+                        for (int j = 0; j < 9; j++) {
+                            if (makanan[j].compareToIgnoreCase(makanan[j + 1]) > 0) {
+                                String t = makanan[j];
+                                 makanan[j] = makanan[j + 1];
+                                 makanan[j + 1] = t;
+                                 int h = harga[j];
+                                 harga[j] = harga[j + 1];
+                                 harga[j + 1] = h;
+                            }
+                        }
+                    }
+                    
+                    System.out.println("Daftar Menu");
+                    for (int i = 0; i < 10; i++) {
+			System.out.println(makanan[i] + " " + harga[i]);
+                    }
+                    break;
+                case 2:
+                    System.out.print("Cari = ");
+                    String cari = sc.next();
+                    String[] cariMakan = new String[10];
+                    int[] cariHarga = new int[10];
+                    
+                    int idx = 0;
+                    for (int i = 0; i < makanan.length; i++) {
+                        if (makanan[i].indexOf(cari) >= 0) {
+                            cariMakan[idx] = makanan[i];
+                            cariHarga[idx] = harga[i];
+                            idx++;
+                            System.out.println(idx + ". " + makanan[i] + " " + harga[i]);
+                        }
+                    }
+                    
+                    //Transaksi
+                    System.out.print("Pilih Menu = ");
+                    int pilih2 = sc.nextInt();
+                    beliMakan[jumlahBeli] = cariMakan[pilih2 - 1];
+                    beliHarga[jumlahBeli] = cariHarga[pilih2 - 1];
+                    jumlahBeli++;
+                    break;
+                case 3 :
+                    
+                   
+                    // Sorting Harga Dari Terkecil
+                    for(int i=0;i<harga.length;i++){
+                        for(int j=0;j<harga.length-1;j++){
+                            if(harga[j]>harga[j+1]){
+                                int Temp = harga[j+1];
+                                harga[j+1]=harga[j];
+                                harga[j]=Temp;
+                                String mknTemp = makanan[j+1];
+                                makanan[j+1]=makanan[j];
+                                makanan[j]=mknTemp;
+                            }
+                        }
+                    } 
+                    System.out.print("Masukkan Harga Maksimal : ");
+                    int max = sc.nextInt();
+                    boolean kondisimax=false;
+                    int maxharga=0;
+                    if(max>harga[harga.length-1]){
+                        maxharga=harga.length-1;
+                        kondisimax=true;
+                    }
+                    if(kondisimax==false){
+                        for(int i=harga.length-1;i>=0;i--){
+                            if(max>=harga[i]){
+                                maxharga=i;
+                                kondisimax=true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    System.out.print("Masukkan Harga Minimal : ");
+                    int min = sc.nextInt();
+                    boolean kondisimin=false;
+                    int minharga=0;
+                    if(min<harga[0]){
+                    minharga=0;
+                    kondisimin=true;
+                }
+                    if(kondisimin==false){
+                        for(int i=0; i<=harga.length;i++){
+                            if(min<=harga[i]){
+                                minharga=i;
+                                kondisimin=true;
+                                break; 
+                            }
+                        }
+                    }
+                    System.out.println("=======================================================");
+                    System.out.println("DAFTAR PENCARIAN ");
+                    System.out.println("=======================================================");
+                    int idx2=0;
+                    for(int i=minharga;i<=maxharga;i++){
+                        rangemakanan[idx2]=makanan[i];
+                        rangeharga[idx2]=harga[i];
+                        System.out.println((idx2+1)+"\t"+makanan[i]+"\t"+harga[i]);
+                        idx2++;
+                            
+                    }
+                    
+                    break;
+                case 4:
+                    System.out.println("Terima Kasih...");
+            }
+        } while (pilih != 4);
+        
+        //Cetak daftar beli
+	System.out.println("Daftar Beli");
+	for (int i = 0; i < jumlahBeli; i++) {
+            System.out.println(beliMakan[i] + " [" + beliHarga[i] + "]");
+	}
+    }
+}
